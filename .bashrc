@@ -19,7 +19,5 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias l='less'
 alias irb='irb --readline -r irb/completion'
+alias tmux='tmux -2'
 PS1='[\u@\h \W]\$ '
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:/usr/local/heroku/bin # Add heroku to PATH
