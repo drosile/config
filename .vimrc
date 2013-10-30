@@ -31,7 +31,7 @@ set fileformat=unix
 set lazyredraw
 set confirm
 set nobackup
-set viminfo='20,\"500
+set viminfo='20,\"500,:20,%,n~/.viminfo
 set hidden
 set history=50
 set mouse=v
@@ -83,6 +83,17 @@ if has("autocmd")
                 \ if line("'\''") > 0 && line("'\''") <= line("$") |
                 \   exe "normal g'\''" |
                 \ endif
+    " restore cursor to previous position on file open
+    function! ResCur()
+        if line("'\"") <= line("$")
+            normal! g`"
+            return 1
+        endif
+    endfunction
+    augroup resCur
+        autocmd!
+        autocmd BufWinEnter * call ResCur()
+    augroup END
     autocmd FileType * let b:comment = "#"
     autocmd FileType asm let b:comment = ";"
     autocmd FileType nasm let b:comment = ";"
