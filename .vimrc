@@ -105,7 +105,7 @@ if has("autocmd")
     nmap <expr> - AddComment()
     nmap <expr> _ RemoveComment()
     vmap <expr> - AddComment()
-    vmap <expr> _ Removecomment()
+    vmap <expr> _ RemoveComment()
     func AddComment()
         return ':s/^\(\s*\)/\1' . b:comment . "/\r:nohl\r"
     endfunc
