@@ -87,6 +87,7 @@ if has("autocmd")
         au FileType xsit,xml,css,html,xhtml,javascript,sh,config,c,cpp,docbook set smartindent shiftwidth=3 softtabstop=2 expandtab
         au FileType tex set wrap shiftwidth=2 softtabstop=2 expandtab
         au FileType python set tabstop=4 softtabstop=4 expandtab shiftwidth=4 cinwords=if,elif,else,for,while,try,except,finally,def,class
+        au FileType python set colorcolumn=80
     augroup END
     autocmd BufReadPost *
                 \ if line("'\''") > 0 && line("'\''") <= line("$") |
