@@ -53,7 +53,7 @@ PS1='[\u@\h] \w $(git branch &>/dev/null;\
       echo "\[\033[0m\]\n\$ "; \
    fi)'
 
-
+export TERM="xterm-256color"
 
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
