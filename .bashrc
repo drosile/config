@@ -19,6 +19,8 @@ shopt -s checkwinsize
 
 CDPATH=".:..:~"
 HISTSIZE=10000
+HISTIGNORE=' *:&:?:??'
+HISTCONTROL=ignoreboth
 
 if [[ $platform == 'linux' ]]; then
    alias ls='ls --color=auto'

@@ -11,6 +11,8 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/syntastic'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/nerdtree'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'groenewege/vim-less'
 "color scheme
 colors dave
 set background=dark
@@ -32,8 +34,8 @@ set smartcase
 set smarttab
 set magic
 set bs=indent,eol,start
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set fileformat=unix
 "system settings
@@ -88,6 +90,7 @@ if has("autocmd")
         au FileType tex set wrap shiftwidth=2 softtabstop=2 expandtab
         au FileType python set tabstop=4 softtabstop=4 expandtab shiftwidth=4 cinwords=if,elif,else,for,while,try,except,finally,def,class
         au FileType python set colorcolumn=80
+        au FileType javascript,ruby set tabstop=2 softtabstop=2 shiftwidth=2
     augroup END
     autocmd BufReadPost *
                 \ if line("'\''") > 0 && line("'\''") <= line("$") |
