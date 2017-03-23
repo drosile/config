@@ -81,7 +81,7 @@ if has("autocmd")
         au FileType tex set wrap shiftwidth=2 softtabstop=2 expandtab
         au FileType python set tabstop=4 softtabstop=4 expandtab shiftwidth=4 cinwords=if,elif,else,for,while,try,except,finally,def,class
         au FileType python set colorcolumn=80
-        au FileType javascript,ruby set tabstop=2 softtabstop=2 shiftwidth=2
+        au FileType javascript,ruby set tabstop=2 softtabstop=2 shiftwidth=2 colorcolumn=90
     augroup END
     autocmd BufReadPost *
                 \ if line("'\''") > 0 && line("'\''") <= line("$") |
