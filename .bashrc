@@ -69,6 +69,7 @@ fi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH=$HOME/bin:$PATH
 
 function pr_number_for_sha {
   git log --merges --ancestry-path --oneline $1..master\
