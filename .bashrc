@@ -69,3 +69,17 @@ fi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+function pr_number_for_sha {
+  git log --merges --ancestry-path --oneline $1..master\
+  | grep 'pull request'\
+  | tail -n1\
+  | awk '{print $5}'\
+  | cut -c2-
+}
+
+GITHUB_ORG='drosile'
+function pr_for_sha {
+  pr_number_for_sha $1\
+  | xargs -I % open https://github.com/${GITHUB_ORG}/${PWD##*/}/pull/%
+}
