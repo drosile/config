@@ -23,7 +23,7 @@ cd ~/.vim/bundle
 for repo in "${repos[@]}"
 do
   IFS=/ read -r author plugin <<< "$repo"
-  if [ -d ./$plugin ]; then
+  if [ ! -z "$plugin" ] && [ -d ./$plugin ]; then
     rm -rf ./$plugin
   fi
   git clone git://github.com/$author/$plugin.git
