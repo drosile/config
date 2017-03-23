@@ -3,15 +3,28 @@
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
-# Install plugins
+# Define repos for plugins
+repos=(
+  tpope/vim-fugitive
+  tpope/vim-salve
+  tpope/vim-classpath
+  tpope/vim-projectionist
+  tpope/vim-dispatch
+  tpope/vim-fireplace
+  tpope/vim-surround
+  guns/vim-clojure-static
+  scrooloose/nerdtree
+  scrooloose/syntastic
+  kien/rainbow_parentheses.vim
+)
+
+# Install plugins from repos
 cd ~/.vim/bundle
-git clone git://github.com/tpope/vim-fugitive.git
-git clone git://github.com/tpope/vim-salve.git
-git clone git://github.com/tpope/vim-classpath.git
-git clone git://github.com/tpope/vim-projectionist.git
-git clone git://github.com/tpope/vim-dispatch.git
-git clone git://github.com/tpope/vim-fireplace.git
-git clone git://github.com/guns/vim-clojure-static.git
-git clone git://github.com/scrooloose/nerdtree.git
-git clone git://github.com/scrooloose/syntastic.git
-git clone git://github.com/kien/rainbow_parentheses.vim.git
+for repo in "${repos[@]}"
+do
+  IFS=/ read -r author plugin <<< "$repo"
+  if [ -d ./$plugin ]; then
+    rm -rf ./$plugin
+  fi
+  git clone git://github.com/$author/$plugin.git
+done
