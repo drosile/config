@@ -20,6 +20,9 @@ shopt -s checkwinsize
 CDPATH=".:..:~"
 HISTSIZE=10000
 HISTCONTROL=ignoredups
+export XDG_CURRENT_DESKTOP=sway
+export MOZ_ENABLE_WAYLAND=1
+export XDG_SESSION_TYPE=wayland
 
 if [[ $platform == 'linux' ]]; then
    alias ls='ls --color=auto'
@@ -36,13 +39,15 @@ alias cp='cp -i -p'
 alias mv='mv -i'
 alias rm='rm -i'
 alias l='less'
+alias k='kubectl'
+alias m='minikube'
 alias irb='irb --readline -r irb/completion'
 alias tmux='tmux -2'
-PS1='[\u@\h \w]\$ '
+#PS1='[\u@\h \w]\$ '
 source $HOME/config/git-prompt.sh
 PS1='[\u@\h] \w $(git branch &>/dev/null;\
    if [ $? -eq 0 ]; then \
-      echo "$(echo `git status` | grep "nothing to commit" >/dev/null 2>&1;\
+      echo "$(echo `git status --ignore-submodules` | grep "nothing to commit" >/dev/null 2>&1;\
       if [ "$?" -eq "0" ]; then \
          echo "\[\033[0;32m\]"$(__git_ps1 " (%s)"); \
       else \
@@ -52,7 +57,9 @@ PS1='[\u@\h] \w $(git branch &>/dev/null;\
       echo "\[\033[0m\]\n\$ "; \
    fi)'
 
-export TERM="xterm-256color"
+export PS1
+
+#export TERM="xterm-256color"
 
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
@@ -84,3 +91,8 @@ function pr_for_sha {
   pr_number_for_sha $1\
   | xargs -I % open https://github.com/${GITHUB_ORG}/${PWD##*/}/pull/%
 }
+
+MOZ_ENABLE_WAYLAND=true
+SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent
+
+[[ -f ~/.bashrc.khan ]] && . ~/.bashrc.khan
