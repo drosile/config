@@ -4,4 +4,4 @@
 
 ./make_links.sh
 
-./install_pathogen_with_plugins.sh
+./install_vim_plugins.sh
