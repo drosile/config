@@ -3,9 +3,8 @@ if &compatible
     set nocompatible
 endif
 filetype off
-execute pathogen#infect()
 "color scheme
-colors dave
+colors drosile
 set background=dark
 set scrolloff=2
 set showmatch
@@ -40,13 +39,15 @@ set mouse=v
 set foldmethod=indent
 set foldnestmax=2
 set foldminlines=8
+xnoremap "+y y:call system("wl-copy", @")<cr>
 nnoremap <space> za
 vnoremap <space> zf
 highlight RedundantWhitespace ctermbg=red guibg=red
 match RedundantWhitespace /\s\+$/
-highlight HardTabs ctermbg=red guibg=red
-match HardTabs /\t/
-match Error /\s\+$\|\t/
+"highlight HardTabs ctermbg=red guibg=red
+"match HardTabs /\t/
+"match Error /\s\+$\|\t/
+match Error /\s\+$/
 set wildmode=longest,list,full
 "color settings (if supported)
 if &t_Co > 2 || has("gui_running")
@@ -54,8 +55,18 @@ if &t_Co > 2 || has("gui_running")
 endif
 set nohlsearch
 set incsearch
+"NERDtree
+nnoremap <Leader>f :NERDTreeToggle<Enter>
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+let NERDTreeQuitOnOpen = 1
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeMapActivateMode = '<space>'
 "jj exit insert mode
 inoremap jj <Esc>
+"jk exit insert mode
+inoremap jk <Esc>
 nnoremap JJJJ <Nop>
 "slimux bindings
 map <C-c><C-c> :SlimuxREPLSendLine<CR>
@@ -77,7 +88,7 @@ if has("autocmd")
     "change to directory of current file automatically
     autocmd BufEnter * lcd %:p:h
     augroup mysettings
-        au FileType xsit,xml,css,html,xhtml,javascript,sh,config,c,cpp,docbook set smartindent shiftwidth=3 softtabstop=2 expandtab
+        au FileType xsit,xml,css,html,xhtml,javascript,sh,config,c,cpp,docbook set smartindent shiftwidth=4 softtabstop=4 expandtab
         au FileType tex set wrap shiftwidth=2 softtabstop=2 expandtab
         au FileType python set tabstop=4 softtabstop=4 expandtab shiftwidth=4 cinwords=if,elif,else,for,while,try,except,finally,def,class
         au FileType python set colorcolumn=80
@@ -105,6 +116,8 @@ if has("autocmd")
     autocmd FileType c let b:comment = "\/\/"
     autocmd FileType cc let b:comment = "\/\/"
     autocmd FileType cpp let b:comment = "\/\/"
+    autocmd FileType js let b:comment = "\/\/"
+    autocmd FileType jsx let b:comment = "\/\/"
     "block commenting; - to comment, _ to uncomment
     nmap <expr> - AddComment()
     nmap <expr> _ RemoveComment()
@@ -141,3 +154,6 @@ let g:rbpt_colorpairs = [
     \ ['darkred',     'DarkOrchid3'],
     \ ['red',         'firebrick3'],
     \ ]
+
+let g:syntastic_mode_map = {
+    \ "mode": "passive" }

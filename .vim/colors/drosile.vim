@@ -3,7 +3,7 @@ set background=dark
 if exists("syntax_on")
     syntax reset
 endif
-let g:colors_name = "dave"
+let g:colors_name = "drosile"
 "if &t_Co != 256 || has('gui_running')
 "    echoe 'the ' . g:colors_name . ' color scheme requires a 256-color terminal'
 "    finish
