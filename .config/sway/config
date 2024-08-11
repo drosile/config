@@ -14,10 +14,13 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term kitty
-set $browser "XDG_SESSION_TYPE=wayland GDK_BACKEND=wayland firefox"
-set $private-browser "GDK_BACKEND=wayland firefox --private-window"
+set $term foot
+set $browser "firefox"
+set $private-browser "firefox --private-window"
+set $browser2 "chromium --ozone-platform-hint=auto"
+set $private-browser2 "chromium --incognito --ozone-platform-hint=auto"
 #set $player-pause "tizonia-remote pause"
+set $spotify "spotify --enable-feature=UseOzonePlatform --ozone-platform=wayland"
 set $player-pause "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
 set $player-next "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 set $btconnect "bluetoothctl connect '28:9A:4B:06:03:3B'"
@@ -25,7 +28,17 @@ set $fix-mouse "sudo solaar config 1 hires-smooth-resolution True"
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+set $menu exec $term --app-id=launcher --override=colors.regular3=89a09a \
+  --override=colors.regular4=446c3a --override=colors.regular2=446c3a \
+  --override=colors.regular1=ffdca0 sway-launcher-desktop
+
+#bindsym $mod+d exec $menu
+#set $menu dmenu_path | dmenu | xargs swaymsg exec --
+
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 set $nag exec swaynagmode
 mode "nag" {
@@ -48,19 +61,24 @@ mode "nag" {
     Down      $nag --select next
   }
 }
-swaynag_command swaynagmode
+swaynag_command $nag -R
 
 
-font "Hack" "14"
+font "Hack" "10"
+#client.<class> <border>  <background> <text> <indicator> <child border>
+client.focused  "#1d3126" "#1d3126" "#e1e2dc" "#000000" "#1d3126"
+#client.focused_inactive
+#client.unfocused
 
 #gaps inner 8
 
-seat seat0 xcursor_theme Simple-and-Soft 48
+seat * xcursor_theme Adwaita 24
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg $HOME/Downloads/roberto-nickson-lGCfApDzhYw-unsplash.jpg fill
+output * bg $HOME/Downloads/scott-webb-oRWRlTgBrPo-unsplash.jpg fill
 
 output eDP-1 scale 2 res 3840x2160 pos 320 1440
 ##output HDMI-A-1 scale 2 res 5120x2880 pos 0 0
@@ -80,15 +98,45 @@ output 'Goldstar Company Ltd 27GL850 001NTPC2J568' scale 1 res 2560x1440 pos 0 0
 #
 # Example configuration:
 #
+
 exec swayidle -w \
-        timeout 300 'swaylock -f -c 000000' \
-        timeout 600 'swaymsg "output * dpms off"' \
-              resume 'swaymsg "output * dpms on"' \
-        before-sleep 'swaylock -f -c 000000'
+        timeout 300 'swaylock' \
+        resume 'swaymsg "output * enable"' \
+        timeout 600 'swaymsg "output * disable"' \
+        resume 'swaymsg "output * enable"' \
+        timeout 1200 'swaymsg "output * enable"; sleep 1; systemctl suspend' \
+        resume 'swaymsg "output * enable"' \
+        before-sleep 'swaylock --grace 0'
+
+bindsym --locked $mod+p swaymsg "output * dpms on" && swaymsg "output * enable"
+#exec swayidle -w \
+        #timeout 300 'swaylock' \
+        #timeout 1200 'sleep1; systemctl suspend' \
+        #before-sleep 'swaylock --grace 0'
+# exec swaylock
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+
+set $manual-lock "swaylock --grace 0"
+
+bindsym $mod+Escape exec $manual-lock
+
+# mako notifications
+exec mako --config ~/.config/mako/config 2>&1 >/tmp/mako.log
+
+set $nmgui "nm-applet 2>&1 > /dev/null &"
+exec $nmgui
+
+set $bluetoothgui "blueman-applet 2>&1 > /dev/null &"
+exec $bluetoothgui
+
+set $diskindicator "udiskie --appindicator 2>&1 > /dev/null &"
+exec $diskindicator
+
+set $syncthing "syncthing 2>&1 > /dev/null &"
+exec $syncthing
 
 ### Input configuration
 #
@@ -108,6 +156,14 @@ input "1739:52619:SYNA8004:00_06CB:CD8B_Touchpad" {
   dwt enabled
   tap enabled
   natural_scroll enabled
+  pointer_accel 0.9
+  accel_profile "flat"
+}
+
+input "1133:16478:Logitech_M720_Triathlon" {
+  natural_scroll disabled
+  pointer_accel 0.6
+  accel_profile "flat"
 }
 
 input type:keyboard {
@@ -125,8 +181,12 @@ input type:keyboard {
     bindsym $mod+Shift+f exec $browser
     bindsym $mod+Shift+p exec $private-browser
 
+    # Start Chromium
+    bindsym $mod+Shift+Ctrl+f exec $browser2
+    bindsym $mod+Shift+Ctrl+p exec $private-browser2
+
     # Start Spotify
-    bindsym $mod+Shift+s exec spotify
+    bindsym $mod+Shift+s exec $spotify
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -145,7 +205,7 @@ input type:keyboard {
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e $nag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -198,7 +258,12 @@ input type:keyboard {
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 
-    for_window [class="Spotify"] move to workspace s
+    bindsym $mod+Tab workspace next
+    bindsym $mod+Shift+Tab workspace prev
+
+
+    for_window [title="Spotify"] move to workspace s
+    #for_window [class="Spotify"] move to workspace s
 
 #
 # Layout stuff:
@@ -251,7 +316,7 @@ input type:keyboard {
     bindsym $mod+Ctrl+n exec $player-next
 
     bindsym $mod+Print exec grim -g "$(slurp)" $HOME/screenshots/$(date +'%Y-%m-%d-%H%M%S_screenshot.png')
-    bindsym $mod+Shift+Print exec grim -g "$(slurp)" - | wl-copy
+    bindsym $mod+Shift+Print exec grim -g "$(slurp)" - | swappy -f - -o - | wl-copy
     bindsym $mod+Alt+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $HOME/screenshots/$(date +'%Y-%m-%d-%H%M%S_screenshot.png')
     bindsym $mod+Ctrl+print exec grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:- | wl-copy
 
@@ -281,25 +346,20 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-for_window [title="Firefox - Sharing Indicator"] kill
+#for_window [title="Firefox - Sharing Indicator"] kill
+#for_window [title="Firefox — Sharing Indicator"] kill
 for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="mako"] floating enable
+for_window [app_id="Logseq"] floating enable
 
+for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
+
+gaps inner 5
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    #position top
-#
-    ## When the status_command prints a new line to stdout, swaybar updates.
-    ## The default just shows the current date and time.
-    #status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-#
-    #colors {
-        #statusline #ffffff
-        #background #323232
-        #inactive_workspace #32323200 #32323200 #5c5c5c
-    #}
     swaybar_command waybar
 }
 

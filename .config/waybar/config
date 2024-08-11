@@ -155,7 +155,7 @@
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
+        "format-disconnected": "Disconnected !!!",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
@@ -177,6 +177,13 @@
         },
         "on-click": "pavucontrol",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    "custom/vpn": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/vpn-waybar.sh",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "nmcli -g GENERAL.STATE con show drosile | grep -q activ && nmcli conn down drosile || nmcli conn up drosile"
     },
     "custom/media": {
         "format": "{}",

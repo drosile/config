@@ -1,0 +1,7 @@
+default-timeout=10000
+ignore-timeout=1
+border-radius=3
+border-color=#e4f8ec
+background-color=#275d4ddd
+text-color=#ffffff
+font="Hack 10"

@@ -6,6 +6,13 @@
  *
  * =========================================================================== */
 
+/* palette:
+ * darkest green: 1d3126
+ * bright green: 446c3a
+ * light green: 72887b
+ * brightest greeen: 89a09a
+ * almost white: e1e2dc
+ */
 /* -----------------------------------------------------------------------------
  * Keyframes
  * -------------------------------------------------------------------------- */
@@ -48,10 +55,10 @@
 
 /* The whole bar */
 #waybar {
-    background: #2e3440;
+    background: #1d3126;
     color: white;
-    font-family: FiraCode, Noto Sans, sans-serif, AnonymicePowerline Nerd Font;
-    font-size: 13px;
+    font-family: Hack, FiraCode, Noto Sans, sans-serif, AnonymicePowerline Nerd Font;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -68,7 +75,7 @@
 #custom-alsa,
 #idle_inhibitor,
 #backlight,
-#pulseaudio,
+#custom-vpn,
 #tray {
     padding-left: 10px;
     padding-right: 10px;
@@ -78,35 +85,178 @@
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
+
+
+#workspaces button {
+    /*border-top: 2px solid transparent;*/
+    /* To compensate for the top border and still have vertical centering */
+    font-weight: bold;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #1d3126;
+    background: #e1e2dc;
+}
+
+#workspaces button.focused {
+    font-weight: bold;
+    border-color: #4c7899;
+    color: #e1e2dc;
+    background-color: #1d3126;
+}
+
+#workspaces button.urgent {
+    border-color: #c9545d;
+    color: #c9545d;
+}
+
+#custom-arrow10 {
+    font-size: 17px;
+	color: #e1e2dc;
+	background: transparent;
+}
+
+#window {
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+#custom-arrow1 {
+    font-size: 17px;
+	color: #e1e2dc;
+	background: transparent
+}
+
 #idle_inhibitor {
-    background: #d8dee9;
-    color: #3b4252;
+    background: #e1e2dc;
+    color: #1d3126;
+}
+
+#custom-arrow2 {
+    font-size: 17px;
+	color: #89a09a;
+    background: #e1e2dc
+}
+
+#pulseaudio {
+    background: #89a09a;
+    color: #1d3126;
+}
+
+#pulseaudio.muted {
+    /* No styles */
+}
+
+#custom-arrow3 {
+    font-size: 17px;
+	color: #446c3a;
+	background: #89a09a;
 }
 
 #network {
-    background-color: #88c0d0;
-    color: #3b4252;
+    background-color: #446c3a;
+    color: #e1e2dc;
+}
+
+#network.disconnected {
+    color: #f58712;
+}
+
+#custom-vpn {
+    background-color: #446c3a;
+    color: #e1e2dc;
+}
+
+#custom-vpn.down {
+    background-color: #f53c3c;
+}
+
+#custom-arrow4 {
+    font-size: 17px;
+	color: #1d3126;
+	background: #446c3a
+}
+
+#cpu {
+    background: #1d3126;
+    color: #e1e2dc;
+}
+
+#cpu.warning {
+    color: orange;
+}
+
+#cpu.critical {
+    color: red;
+}
+
+
+#custom-arrow5 {
+    font-size: 17px;
+	color: #e1e2dc;
+	background: #1d3126;
+}
+
+#memory {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background: #e1e2dc;
+    color: #303c28;
+}
+
+#memory.warning {
+    color: orange;
+}
+
+#memory.critical {
+    color: red;
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+#custom-arrow6 {
+    font-size: 17px;
+	color: #89a09a;
+	background: #e1e2dc
+}
+
+#temperature {
+    background: #89a09a;
+    color: #1d3126;
+}
+
+#temperature.critical {
+    color: red;
+}
+
+#custom-arrow7 {
+    font-size: 17px;
+	color: #446c3a;
+	background: #89a09a;
 }
 
 #backlight {
-    background: #88c0d0;
-    color: #434c5e;
+    background: #446c3a;
+    color: #e1e2dc;
 }
 
 #backlight.dull {
     font-weight: bold;
 }
 
-#pulseaudio {
-    background: #5e81ac;
-    color: #d8dee9;
+#custom-arrow8 {
+    font-size: 17px;
+	color: #1d3126;
+	background: #446c3a
 }
 
 #battery {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
-    background-color: #2e3440;
+    color: #e1e2dc;
+    background-color: #1d3126;
 }
 
 #battery.warning {
@@ -126,78 +276,33 @@
     animation-name: blink-critical;
     animation-duration: 2s;
 }
-
+#custom-arrow9 {
+    font-size: 17px;
+	color: #e1e2dc;
+	background: #1d3126;
+}
 #clock {
-    background: #d8dee9;
-    color: #2e3440;
+    background: #e1e2dc;
+    color: #1d3126;
     font-weight: bold;
 }
 
-#clock.date {
-    background: #2e3440;
-    color: #e5e9f0;
-    font-weight: bold;
+#tray {
+    /* No styles */
 }
 
-#clock.time {
-    background: #d8dee9;
-    color: #2e3440;
-    font-weight: bold;
-}
-
-#cpu {
-    background: #434c5e;
-    color: #e5e9f0;
-}
-
-#cpu.warning {
-    color: orange;
-}
-
-#cpu.critical {
-    color: red;
-}
-
-#memory {
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    background: #d8dee9;
-    color: #2e3440;
-}
-
-#memory.warning {
-    color: orange;
-}
-
-#memory.critical {
-    color: red;
-    animation-name: blink-critical;
-    animation-duration: 2s;
+/* unused */
+#custom-arrow11 {
+    font-size: 17px;
+	color: #949494;
+	background: #4e4e4e;
 }
 
 #mode {
-    background: #64727D;
+    background: #70a683;
     border-top: 2px solid white;
     /* To compensate for the top border and still have vertical centering */
     padding-bottom: 2px;
-}
-
-#pulseaudio {
-    background: #4c566a;
-    color: #e5e9f0;
-}
-
-#network.disconnected {
-    color: red;
-}
-
-#pulseaudio {
-    /* No styles */
-}
-
-#pulseaudio.muted {
-    /* No styles */
 }
 
 #custom-media {
@@ -205,102 +310,7 @@
     color: rgb(102, 220, 105);
 }
 
-#temperature {
-    background: #5e81ac;
-    color: #d8dee9;
-}
 
-#temperature.critical {
-    color: red;
-}
-
-#tray {
-    /* No styles */
-}
-
-#window {
-    font-weight: bold;
-    padding-right: 5px;
-}
-
-#workspaces button {
-    /*border-top: 2px solid transparent;*/
-    /* To compensate for the top border and still have vertical centering */
-    font-weight: bold;
-    padding-bottom: 2px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: #2e3440;
-    background: #5e81ac;
-}
-
-#workspaces button.focused {
-    font-weight: bold;
-    border-color: #4c7899;
-    color: #5e81ac;
-    background-color: #2e3440;
-}
-
-#workspaces button.urgent {
-    border-color: #c9545d;
-    color: #c9545d;
-}
-
-#custom-arrow1 {
-    font-size: 17px;
-	color: #d8dee9;
-	background: transparent
-}
-#custom-arrow2 {
-    font-size: 17px;
-	color: #4c566a;
-	background: #d8dee9
-}
-#custom-arrow3 {
-    font-size: 17px;
-	color: #88c0d0;
-	background: #4c566a
-}
-#custom-arrow4 {
-    font-size: 17px;
-	color: #434c5e;
-	background: #88c0d0
-}
-#custom-arrow5 {
-    font-size: 17px;
-	color: #d8dee9;
-	background: #434c5e
-}
-#custom-arrow6 {
-    font-size: 17px;
-	color: #5e81ac;
-	background: #d8dee9
-}
-#custom-arrow7 {
-    font-size: 17px;
-	color: #88c0d0;
-	background: #5e81ac
-}
-#custom-arrow8 {
-    font-size: 17px;
-	color: #2e3440;
-	background: #88c0d0
-}
-#custom-arrow9 {
-    font-size: 17px;
-	color: #eceff4;
-	background: #2e3440;
-}
-#custom-arrow10 {
-    font-size: 17px;
-	color: #5e81ac;
-	background: transparent;
-}
-#custom-arrow11 {
-    font-size: 17px;
-	color: #949494;
-	background: #4e4e4e;
-}
 
 /*
 * {
@@ -359,7 +369,7 @@ window#waybar.firefox {
 }
 
 #workspaces button.focused {
-    background-color: #64727D;
+    background-color: #70a683;
     border-bottom: 3px solid #ffffff;
 }
 
@@ -368,7 +378,7 @@ window#waybar.firefox {
 }
 
 #mode {
-    background-color: #64727D;
+    background-color: #70a683;
     border-bottom: 3px solid #ffffff;
 }
 
@@ -435,7 +445,7 @@ label:focus {
 }
 
 #backlight {
-    background: #88c0d0;
+    background: #74c4ac;
     color: #434c5e;
 }
 
@@ -444,7 +454,7 @@ label:focus {
 }
 
 #network.ethernet {
-    background-color: #88c0d0;
+    background-color: #74c4ac;
     color: #3b4252;
 }
 
@@ -453,7 +463,7 @@ label:focus {
 }
 
 #network {
-    background-color: #88c0d0;
+    background-color: #74c4ac;
     color: #3b4252;
 }
 
@@ -519,3 +529,4 @@ label:focus {
     background-color: #51a37a;
 }
 */
+
